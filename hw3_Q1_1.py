@@ -9,10 +9,10 @@ import scipy
 # I_(1/4) is the modified Bessel function as a function of 2x/t (this took me sooooo long to figure out because I thought it was I_1/4 times 2x/t)
 
 def surface_density(x, t):
-    return (1/(t*x**(1/4)))*(np.exp(-(1+x**2)/t))*(scipy.special.iv(1/4,(2*x)/t))
+    return (1/(t*x**(1/4)))*(np.exp(-(1+x**2)/t))*(scipy.special.iv(1/4,((2*x)/t)))
  
 
-x_vals = np.linspace(0.1, 5, 500) # we have to start above zero to prevent diving by zero
+x_vals = np.linspace(0.1, 5, 400) # we have to start above zero to prevent diving by zero in the surface density function  (but gives an error abount invalid value for multiplication?)
 t_vals = np.array([0.01, 0.02, 0.04, 0.08, 0.1, 1, 10]) # wanted to do a range of different orders of magnitude for the time values
 
 
@@ -33,7 +33,7 @@ plt.plot(x_vals, surface_density(x_vals, t_vals[5]), label='t=1')
 
 plt.plot(x_vals, surface_density(x_vals, t_vals[6]), label='t=10')
 
-plt.xlabel("x")
+plt.xlabel("r")
 plt.ylabel("Surface density/(m/pi&R^2)") #if i have time i will make this nice with latex formating
 plt.legend()
 plt.xlim(0,2)

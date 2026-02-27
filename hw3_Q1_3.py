@@ -50,7 +50,8 @@ fig, ax = plt.subplots(1,1)
 
 # # we want to update our inital conditions
 updates, = ax.plot(x_values, grid, 'go') # i think the comma refers to adding onto the inital state (based on drawing functions from Eve's example)
-
+ax.set_xlabel("r")
+ax.set_ylabel("Surface density/(m/pi&R^2)") #if i have time i will make this nice with latex formating
 # making our figure window smaller so the evolution of the surface density is more nicely seen
 # ax.set_xlim([0, 1])
 # ax.set_ylim([0.0004, 2])
