@@ -30,7 +30,7 @@ grid[:] = np.exp(-(x_values-x_mid)**2 /(2*sigma**2))
 # boundary conditions of our velcoity and surface density for outflowing material
 velocity_values[0] = -abs(velocity_values[0])
 velocity_values[Nx-1] = -abs(velocity_values[Nx-2])
-grid[0] = grid[1]
+grid[0] = grid[1] # i think something weird is happening with this boundary condition (it is slightly lower as the material moves inwards?)
 grid[Nx-1] = grid[Nx-2]
 
 # defining part of the coefficents that are in the matrix we need to find our evolved grid 
