@@ -34,7 +34,7 @@ plt.plot(x_vals, surface_density(x_vals, t_vals[5]), label='t=1')
 plt.plot(x_vals, surface_density(x_vals, t_vals[6]), label='t=10')
 
 plt.xlabel("r")
-plt.ylabel("Surface density/(m/pi&R^2)") #if i have time i will make this nice with latex formating
+plt.ylabel("$\Sigma /(m/\pi R^2)$") #if i have time i will make this nice with latex formating
 plt.legend()
 plt.xlim(0,2)
 

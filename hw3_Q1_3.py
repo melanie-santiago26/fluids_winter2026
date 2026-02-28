@@ -4,7 +4,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 
+# initial set up inspired by Eve's example on Canvas
 start = 0
 end = 50
 dx = 1 # spatial spacing 
@@ -13,8 +13,7 @@ D = 0.1 # viscosity value, played around with values and I like this one in term
 time_steps = 300
 Nx = int((end - start) / dx) #number of spatial points
 # our spatiial values
-x_values = np.arange(0,Nx*1.,dx)/Nx # make it so our values range from 0 to 1
-x_values[0] = 0.01 # prevents hte division by zero later on (when computing alpha and velcoity)
+x_values = np.arange(0.01,Nx*1.,dx)/Nx # make it so our values range from 0 to 1, making sure we don't get the divide by zero error by starting a little above zero
 
 # # defining our velcoity values based on our xvalues (v=D/x) based on our solution to the surface density
 velocity_values = -((9/2)*(3*D))/np.copy(x_values) # the extra factors are from my solution (in my pset)
@@ -24,11 +23,11 @@ velocity_values = -((9/2)*(3*D))/np.copy(x_values) # the extra factors are from 
 x_mid = (Nx/2)/Nx # so we can center our gaussian around the mipoint of our x-values that range from 0 to 1
 sigma = 0.05 # spread in the data
 grid = np.zeros(Nx)
-grid[:] = np.exp(-(x_values-x_mid)**2 /(2*sigma**2)) # making it so our gaussian is set at every x value
+grid[:] = (1/np.sqrt(2*np.pi))*np.exp(-(x_values-x_mid)**2 /(2*sigma**2)) # making it so our gaussian is set at every x value
 
 
 # boundary conditions of our velcoity for outflowing material
-velocity_values[0] = -abs(velocity_values[0])
+velocity_values[0] = -abs(velocity_values[1])
 velocity_values[Nx-1] = -abs(velocity_values[Nx-2])
 
 # defining part of the coefficents that are in the matrix we need to find our evolved grid 
@@ -43,13 +42,10 @@ plt.ion()
 # set up our figure
 fig, ax = plt.subplots(1,1)
 
-# inital state fof the surface density, a sharp Gaussian at the midpoint of the grid size
-# ax.plot(x_values, grid, 'b-')
-
 # # we want to update our inital conditions
 updates, = ax.plot(x_values, grid, 'go') # i think the comma refers to adding onto the inital state (based on drawing functions from Eve's example)
 ax.set_xlabel("r")
-ax.set_ylabel("Surface density/(m/pi&R^2)") #if i have time i will make this nice with latex formating
+ax.set_ylabel("$\Sigma /(m/\pi R^2)$") #if i have time i will make this nice with latex formating
 # making our figure window smaller so the evolution of the surface density is more nicely seen
 # ax.set_xlim([0, 1])
 # ax.set_ylim([0.0004, 2])
