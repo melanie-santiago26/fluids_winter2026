@@ -23,7 +23,7 @@ velocity_values = -((9/2)*(3*D))/np.copy(x_values) # the extra factors are from 
 x_mid = (Nx/2)/Nx # so we can center our gaussian around the mipoint of our x-values that range from 0 to 1
 sigma = 0.05 # spread in the data
 grid = np.zeros(Nx)
-grid[:] = (1/np.sqrt(2*np.pi))*np.exp(-(x_values-x_mid)**2 /(2*sigma**2)) # making it so our gaussian is set at every x value
+grid[:] = (1/(np.sqrt(2*np.pi)*sigma))*np.exp(-(x_values-x_mid)**2 /(2*sigma**2)) # making it so our gaussian is set at every x value
 
 
 # boundary conditions of our velcoity for outflowing material
