@@ -69,13 +69,13 @@ for n in range(time_steps): # looping through the number of time steps
     # using the updated grid or updated surface density that experienced diffusion to now update via advection
     grid[1:Nx-1] = (1/2)*(grid_updated[2:]+grid_updated[:Nx-2])-((velocity_values[1:Nx-1]*dt)/(2*dx))*(grid_updated[2:]-grid_updated[:Nx-2])
 
-    # must update the boundar conditions here
-    grid[0] = grid[1] # i think something weird is happening with this boundary condition (it is slightly lower as the material moves inwards?)
+    # must update the boundary conditions here because we update the grid (whereas for velcoity, we don't need to because we don't update the (constant in time))
+    grid[0] = grid[1] 
     grid[Nx-1] = grid[Nx-2]
 
     # drawing on the plot and updating 
     updates.set_ydata(grid)
 
-    # frames of the animation
+    # gives us different frames of the animation
     plt.pause(0.05)
 
