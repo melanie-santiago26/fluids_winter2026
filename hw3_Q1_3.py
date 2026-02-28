@@ -14,7 +14,7 @@ time_steps = 300
 Nx = int((end - start) / dx) #number of spatial points
 # our spatiial values
 x_values = np.arange(0,Nx*1.,dx)/Nx # make it so our values range from 0 to 1
-x_values[0] = dx # prevents hte division by zero later on (when computing alpha and velcoity)
+x_values[0] = 0.01 # prevents hte division by zero later on (when computing alpha and velcoity)
 
 # # defining our velcoity values based on our xvalues (v=D/x) based on our solution to the surface density
 velocity_values = -((9/2)*(3*D))/np.copy(x_values) # the extra factors are from my solution (in my pset)
@@ -24,14 +24,12 @@ velocity_values = -((9/2)*(3*D))/np.copy(x_values) # the extra factors are from 
 x_mid = (Nx/2)/Nx # so we can center our gaussian around the mipoint of our x-values that range from 0 to 1
 sigma = 0.05 # spread in the data
 grid = np.zeros(Nx)
-grid[:] = np.exp(-(x_values-x_mid)**2 /(2*sigma**2))
+grid[:] = np.exp(-(x_values-x_mid)**2 /(2*sigma**2)) # making it so our gaussian is set at every x value
 
 
-# boundary conditions of our velcoity and surface density for outflowing material
+# boundary conditions of our velcoity for outflowing material
 velocity_values[0] = -abs(velocity_values[0])
 velocity_values[Nx-1] = -abs(velocity_values[Nx-2])
-grid[0] = grid[1] # i think something weird is happening with this boundary condition (it is slightly lower as the material moves inwards?)
-grid[Nx-1] = grid[Nx-2]
 
 # defining part of the coefficents that are in the matrix we need to find our evolved grid 
 beta = (3*D*dt)/(dx**2)
@@ -77,6 +75,9 @@ for n in range(time_steps): # looping through the number of time steps
     # using the updated grid or updated surface density that experienced diffusion to now update via advection
     grid[1:Nx-1] = (1/2)*(grid_updated[2:]+grid_updated[:Nx-2])-((velocity_values[1:Nx-1]*dt)/(2*dx))*(grid_updated[2:]-grid_updated[:Nx-2])
 
+    # must update the boundar conditions here
+    grid[0] = grid[1] # i think something weird is happening with this boundary condition (it is slightly lower as the material moves inwards?)
+    grid[Nx-1] = grid[Nx-2]
 
     # drawing on the plot and updating 
     updates.set_ydata(grid)
